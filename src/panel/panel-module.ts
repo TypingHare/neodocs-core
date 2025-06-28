@@ -1,6 +1,6 @@
 import type { NeodocsState } from '../neodocs-state.js'
 import type { Neodocs } from '../neodocs.js'
-import { ROOT_PANEL_ID } from './constants.js'
+import { ROOT_PANEL_ID, type PanelType } from './constants.js'
 import { NeoPanel } from './neo-panel.js'
 
 export class PanelModule {
@@ -25,7 +25,11 @@ export class PanelModule {
    * @param parentId - The ID of the parent panel, if any. Defaults to null.
    * @return A new instance of Neodocs panel.
    */
-  create(id: string, type: string, parentId: string | null = null): NeoPanel {
+  create(
+    id: string,
+    type: PanelType,
+    parentId: string | null = null
+  ): NeoPanel {
     const parent = parentId ? this.byId[parentId] || null : null
     const panel = new NeoPanel(this.neodocs, id, type, parent)
     this.byId[id] = panel

@@ -12,6 +12,7 @@ export const ROOT_PANEL_ID = 'panel-root'
  * @property 'sidebar' - A sidebar panel type.
  * @property 'file-tree' - A file tree panel type.
  * @property 'floating' - A floating panel type.
+ * @property 'fixed' - A fixed panel type.
  */
 export type PanelType =
   | 'root'
@@ -19,4 +20,5 @@ export type PanelType =
   | 'sidebar'
   | 'file-tree'
   | 'floating'
+  | 'fixed'
   | string
