@@ -34,6 +34,10 @@ export class PanelModule {
     const panel = new NeoPanel(this.neodocs, id, type, parent)
     this.byId[id] = panel
 
+    if (parent && !parent.children.includes(panel)) {
+      parent.children.push(panel)
+    }
+
     return panel
   }
 
@@ -141,7 +145,9 @@ export class PanelModule {
       this.showAll(ns, [panelId])
     }
 
-    ns.panel.activeIdStack.push(panelId)
+    if (this.getActive(ns).id !== panelId) {
+      ns.panel.activeIdStack.push(panelId)
+    }
   }
 
   /**
@@ -230,20 +236,15 @@ export class PanelModule {
    * @param panelId - The ID of the panel to open.
    */
   open(ns: NeodocsState, panelId: string): void {
-    const displayedIds = ns.panel.displayedIds
-    const panelToAdd = []
+    const parentPanelIds = []
     let currentPanel: NeoPanel | null = this.get(panelId)
-    while (
-      currentPanel &&
-      currentPanel.id !== ROOT_PANEL_ID &&
-      !displayedIds.has(currentPanel.id)
-    ) {
-      panelToAdd.push(currentPanel.id)
+    while (currentPanel && currentPanel.id !== ROOT_PANEL_ID) {
+      parentPanelIds.push(currentPanel.id)
       currentPanel = currentPanel.parent
     }
 
-    if (panelToAdd.length > 0) {
-      this.showAll(ns, panelToAdd.reverse())
+    if (parentPanelIds.length > 0) {
+      this.showAll(ns, parentPanelIds)
     }
 
     this.activate(ns, panelId)
@@ -309,7 +310,7 @@ export class PanelModule {
    * @param toPanelId - The ID of the panel to switch to.
    */
   switch(ns: NeodocsState, toPanelId: string): void {
-    this.hide(ns, toPanelId)
+    this.hide(ns, this.getActive(ns).id)
     this.activate(ns, toPanelId)
   }
 }
