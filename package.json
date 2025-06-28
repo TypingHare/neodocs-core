@@ -1,0 +1,29 @@
+{
+  "name": "@neodocs/core",
+  "version": "0.0.0",
+  "description": "Neodocs core",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build:types": "dts-bundle-generator -o dist/index.d.ts src/index.ts",
+    "build": "node_modules/.bin/tsc && pnpm build:types"
+  },
+  "keywords": [
+    "neodocs",
+    "core"
+  ],
+  "author": {
+    "name": "James Chen",
+    "email": "jameschan312.cn@gmail.com"
+  },
+  "license": "MIT",
+  "packageManager": "pnpm@10.12.1",
+  "devDependencies": {
+    "dts-bundle-generator": "^9.5.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "marked": "^15.0.12"
+  }
+}
