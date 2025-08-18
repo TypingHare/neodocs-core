@@ -59,6 +59,11 @@ export class NeoPanel {
     return false
   }
 
+  /**
+   * Gets all descendant panel IDs, including the panel's own ID.
+   *
+   * @return An array of all descendant panel IDs.
+   */
   getAllDescendantIds(): string[] {
     const descendants: string[] = []
 

@@ -4,6 +4,12 @@ export type NeoFileNodeType = 'file' | 'directory'
 
 /**
  * Represents a raw Neodocs file node.
+ *
+ * @property type - The type of the file node, either 'file' or 'directory'.
+ * @property path - The file path of the node.
+ * @property title - The title of the file node.
+ * @property content - The content of the file. If the node is a directory, it
+ *   would be the content of the "index.md" file within that directory.
  */
 export interface RawNeoFileNode {
   type: NeoFileNode['type']
@@ -11,6 +17,15 @@ export interface RawNeoFileNode {
   title: NeoFileNode['title']
   content: NeoFileNode['content']
   children: RawNeoFileNode[]
+}
+
+/**
+ * Represents a raw Neodocs file tree.
+ *
+ * @property root - The root node of the file tree.
+ */
+export interface RawNeoFileTree {
+  root: RawNeoFileNode
 }
 
 /**

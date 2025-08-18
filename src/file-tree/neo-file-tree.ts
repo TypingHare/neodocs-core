@@ -1,6 +1,13 @@
 import { NeoFileNode } from './neo-file-node.js'
 import type { ElementIdProvider, FileTreeState } from './types.js'
 
+/**
+ * Represents a Neodocs file tree, which is a collection of NeoFileNode objects.
+ *
+ * It provides methods to get nodes by ID or path, retrieve HTML elements
+ * associated with nodes, hash the tree structure into maps for quick access,
+ * and manage the expansion and selection state of nodes.
+ */
 export class NeoFileTree {
   byId: Record<number, NeoFileNode> = {}
   byPath: Record<string, NeoFileNode> = {}
@@ -71,16 +78,41 @@ export class NeoFileTree {
     this.hash(this.root)
   }
 
+  /**
+   * Expands file nodes.
+   *
+   * This method adds a list of file node IDs to the `expandIds` property in the
+   * file tree state.
+   *
+   * @param state The file tree state to update.
+   * @param nodeIds The list of file node IDs to expand.
+   */
   expand(state: FileTreeState, nodeIds: number[]): void {
     state.expandedIds = new Set([...state.expandedIds, ...nodeIds])
   }
 
+  /**
+   * Collapses files nodes.
+   *
+   * This method removes a list of file node IDs from the `expandIds` property
+   * in the file tree state.
+   *
+   * @param state The file tree state to update.
+   * @param nodeIds The list of file node IDs to collapse.
+   */
   collapse(state: FileTreeState, nodeIds: number[]): void {
     state.expandedIds = new Set(
       [...state.expandedIds].filter((id) => !nodeIds.includes(id))
     )
   }
 
+  /**
+   * Selects a file node.
+   *
+   * @param state The file tree state to update.
+   * @param nodeId The ID of the file node to select. If not provided,
+   *   the currently focused node will be selected.
+   */
   select(state: FileTreeState, nodeId?: number) {
     state.selectedId = nodeId ? nodeId : state.focusedId
   }

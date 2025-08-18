@@ -1,19 +1,24 @@
-import { NeoFileTreeConverter } from './neo-file-tree-parser.js'
+import { NeoFileTreeConverter } from './neo-file-tree-converter.js'
 import { NeoFileTree } from './neo-file-tree.js'
-import type { RawNeoFileNode } from './types.js'
+import type { RawNeoFileTree } from './types.js'
 
+/**
+ * The TreeModule class manages a collection of NeoFileTree instances.
+ *
+ * It allows creating new trees from raw data and retrieving existing trees by
+ * name.
+ */
 export class TreeModule {
   readonly trees: Record<string, NeoFileTree> = {}
 
-  create(name: string, rawRoot: RawNeoFileNode): NeoFileTree {
+  create(name: string, rawFileTree: RawNeoFileTree): NeoFileTree {
     if (this.trees[name]) {
       throw new Error(`File tree with name "${name}" already exists.`)
     }
 
-    const tree = new NeoFileTreeConverter().parseFileTree(rawRoot)
-    this.trees[name] = tree
+    this.trees[name] = NeoFileTreeConverter.fromRawFileTree(rawFileTree)
 
-    return tree
+    return this.trees[name]
   }
 
   get(name: string): NeoFileTree {

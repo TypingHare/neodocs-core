@@ -1,5 +1,5 @@
 export * from './types.js'
 export * from './neo-file-node.js'
 export * from './neo-file-tree.js'
-export * from './neo-file-tree-parser.js'
+export * from './neo-file-tree-converter.js'
 export * from './tree-module.js'
